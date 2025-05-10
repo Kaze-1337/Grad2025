@@ -77,7 +77,7 @@
                                             <i class="icon-edit"></i>
                                         </div>
                                     </a>
-                                    <form action="{{ route('admin.user.delete', ['id' => $user->id]) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                    <form action="{{ route('admin.user.delete', ['id' => $user->id]) }}" method="POST" style="display:inline;" class="delete-user-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="item delete" title="Delete User" style="background: none; border: none; color: #dc3545; cursor: pointer; padding: 0;">
@@ -100,3 +100,29 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-user-form').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action will permanently delete the user!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete user!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endpush

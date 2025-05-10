@@ -52,10 +52,7 @@
           <label>Total</label>
           <span>${{ $order->total }}</span>
         </div>
-        <div class="order-info__item">
-          <label>Payment Method</label>
-          <span>{{ $order->mode }}</span>
-        </div>
+        
       </div>
       <div class="checkout__totals-wrapper">
         <div class="checkout__totals">
@@ -67,9 +64,7 @@
                 <th>SUBTOTAL</th>
               </tr>
             </thead>
-            @foreach ($order->orderItems as $item)
-            
-            
+            @foreach ($order->orderItems as $item)       
             <tbody>
               <tr>
                 <td>

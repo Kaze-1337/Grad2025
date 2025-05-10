@@ -64,6 +64,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/account-orders', [UserController::class, 'orders'])->name('user.orders');
     Route::get('/account-order/{order_id}/details', [UserController::class, 'order_details'])->name('user.order.details');
     Route::put('/account-order/cancel-order', [UserController::class, 'order_cancel'])->name('user.order.cancel');
+    Route::get('/user/edit', [UserController::class, 'user_edit'])->name('user.edit');
+    Route::put('/user/update', [UserController::class, 'user_update'])->name('user.update');
 });
 
 Route::middleware(['auth',AuthAdmin::class])->group(function(){
@@ -120,7 +122,7 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
 
     Route::get('/admin/search',[AdminController::class,'search'])->name('admin.search');
 
-    // Product Import Routes
+    
     Route::get('/admin/product-imports', [AdminController::class, 'product_imports'])->name('admin.product-imports');
     Route::get('/admin/product-imports/create', [AdminController::class, 'product_import_create'])->name('admin.product-imports.create');
     Route::post('/admin/product-imports', [AdminController::class, 'product_import_store'])->name('admin.product-imports.store');
@@ -130,4 +132,7 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
     Route::get('/admin/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.user.edit');
     Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.user.update');
+
+
+    Route::get('/admin/product-statistics', [AdminController::class, 'productStatistics'])->name('admin.product.statistics');
 });

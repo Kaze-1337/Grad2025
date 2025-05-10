@@ -48,7 +48,7 @@
         </div>
 
                         <div class="product-actions">
-                            <form method="POST" action="{{ route('cart.add') }}" class="d-flex flex-column gap-3">
+                            <form method="POST" action="{{ route('cart.add') }}" class="d-flex flex-column gap-3 add-to-cart-form">
                                 @csrf
                                 <div class="product-sizes mb-4">
                                     <h5 class="mb-3">Available Sizes:</h5>
@@ -279,22 +279,22 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle thumbnail clicks
+
     const mainImage = document.querySelector('.main-image img');
     const thumbnails = document.querySelectorAll('.thumb');
     
     thumbnails.forEach(thumb => {
         thumb.addEventListener('click', function() {
-            // Update main image
+            
             mainImage.src = this.querySelector('img').src;
             
-            // Update active state
+            
             thumbnails.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
         });
     });
 
-    // Quantity selector functionality
+    
     const quantityInput = document.querySelector('.quantity-input');
     const hiddenQuantityInput = document.querySelector('input[name="quantity"]');
 
@@ -317,13 +317,16 @@ document.addEventListener('DOMContentLoaded', function() {
         hiddenQuantityInput.value = this.value;
     });
 
-    // Form validation
-    document.querySelector('form').addEventListener('submit', function(e) {
-        if (document.querySelectorAll('input[name="sizes[]"]:checked').length === 0) {
-            e.preventDefault();
-            alert('Please select at least one size');
-        }
-    });
+    
+    const addToCartForm = document.querySelector('.add-to-cart-form');
+    if (addToCartForm) {
+        addToCartForm.addEventListener('submit', function(e) {
+            if (document.querySelectorAll('input[name="sizes[]"]:checked').length === 0) {
+                e.preventDefault();
+                alert('Please select at least one size');
+            }
+        });
+    }
 });
 </script>
 @endpush

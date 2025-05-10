@@ -385,13 +385,13 @@
 <script>
   $(function(){
     $('#pagesize').on("change", function() {
-      $("input[name='size']").val($(this).val()); // Cập nhật giá trị input ẩn
-      $("#frmfilter").submit(); // Gửi form
+      $("input[name='size']").val($(this).val()); 
+      $("#frmfilter").submit();
     });
 
     $("#orderby").on("change",function(){
       $("#order").val($("#orderby option:selected").val());
-      $("#frmfilter").submit(); // Gửi form
+      $("#frmfilter").submit(); 
     });
 
     $("input[name='brands']").on("change", function() {
@@ -406,7 +406,7 @@
       });
       console.log("Selected brands: ", brands);
       $("#hdnBrands").val(brands);
-      $("#frmfilter").submit(); // Gửi form
+      $("#frmfilter").submit(); 
     });
 
     $("input[name='categories']").on("change", function() {
@@ -421,7 +421,7 @@
       });
       console.log("Selected categories: ", categories);
       $("#hdnCategories").val(categories);
-      $("#frmfilter").submit(); // Gửi form
+      $("#frmfilter").submit(); 
     });
 
     $("[name='price_range']").on("change", function(){
@@ -431,7 +431,7 @@
       $("#hdnMinPrice").val(min);
       $("#hdnMaxPrice").val(max);
       setTimeout(()=>{
-        $("#frmfilter").submit(); // Gửi form
+        $("#frmfilter").submit();
       },2000);
       
     })

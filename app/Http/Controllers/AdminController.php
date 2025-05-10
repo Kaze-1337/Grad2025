@@ -944,4 +944,28 @@ class AdminController extends Controller
 
         return redirect()->route('admin.users')->with('status', 'User deleted successfully!');
     }
+
+    public function productStatistics()
+    {
+        $products = Product::with('sizes')->get();
+    
+        $totalProducts = $products->count();
+        $totalQuantity = $products->sum(function($product) {
+            return $product->total_quantity;
+        });
+        $inStock = $products->filter(function($product) {
+            return $product->total_quantity > 0;
+        })->count();
+        $outOfStock = $products->filter(function($product) {
+            return $product->total_quantity <= 0;
+        })->count();
+    
+        $soldQuantity = OrderItem::whereHas('order', function($q) {
+            $q->where('status', 'delivered');
+        })->sum('quantity');
+    
+        return view('admin.product-statistics', compact(
+            'totalProducts', 'inStock', 'outOfStock', 'totalQuantity', 'soldQuantity', 'products'
+        ));
+    }
 }
