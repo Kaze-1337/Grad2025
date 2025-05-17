@@ -135,4 +135,5 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
 
 
     Route::get('/admin/product-statistics', [AdminController::class, 'productStatistics'])->name('admin.product.statistics');
+    Route::get('/admin/sales-statistics', [AdminController::class, 'salesStatistics'])->name('admin.sales.statistics');
 });

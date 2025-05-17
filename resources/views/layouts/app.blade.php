@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'Laravel') }}</title>
@@ -290,6 +289,66 @@
       margin-bottom: 10px;
     }
 
+    .search-result {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 8px 0;
+      z-index: 1000;
+    }
+
+    .search-loading {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .search-loading .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .product-item .image {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #f5f5f5;
+    }
+
+    .product-item .image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-item .info {
+      flex-grow: 1;
+    }
+
+    .product-item .price {
+      font-weight: 600;
+      color: #e53e3e;
+    }
+
+    .product-item .original-price {
+      text-decoration: line-through;
+      color: #a0aec0;
+      font-size: 0.875em;
+      margin-left: 8px;
+    }
   </style>
   <div class="header-mobile header_sticky">
     <div class="container d-flex align-items-center h-100">
@@ -455,26 +514,13 @@
             </div>
 
             <div class="search-popup js-hidden-content">
-              <form action="#" method="GET" class="search-field container">
-                <p class="text-uppercase text-secondary fw-medium mb-4">What are you looking for?</p>
-                <div class="position-relative">
-                  <input class="search-field__input search-popup__input w-100 fw-medium" type="text"
-                    name="search-keyword" id="search-input" placeholder="Search products" />
-                  <button class="btn-icon search-popup__submit" type="submit">
-                    <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_search" />
-                    </svg>
-                  </button>
-                  <button class="btn-icon btn-close-lg search-popup__reset" type="reset"></button>
+              <div class="search-section position-relative" style="max-width:400px;margin:auto;">
+                <input type="text" id="search-input" class="form-control" placeholder="Search for products..." autocomplete="off" />
+                <div class="search-popup__results" id="search-results-dropdown">
+                  <div class="search-loading" style="display:none"><span class="spinner"></span>Searching...</div>
+                  <ul class="search-list"></ul>
                 </div>
-
-                <div class="search-popup__results">
-                  <ul id="box-content-search">
-
-                  </ul>
-                </div>
-              </form>
+              </div>
             </div>
           </div>
 
@@ -651,46 +697,126 @@
   <script src="{{ asset('js/sweetalert.min.js')}}"></script>
   <script src="{{  asset('assets/js/plugins/swiper.min.js')}}"></script>
   <script src="{{  asset('assets/js/plugins/countdown.js')}}"></script>
+  <style>
+    .search-loading {
+      display: none;
+      padding: 10px;
+      text-align: center;
+    }
+    .search-loading .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .search-results .product-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .search-results .product-item:hover {
+      background-color: #f9f9f9;
+    }
+    .search-results .product-item .image {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
+    .search-results .product-item .image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .search-results .product-item .info {
+      flex: 1;
+    }
+    .search-results .product-item .name {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .search-results .price {
+      color: #000;
+      font-weight: 600;
+    }
+    .search-results .old-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-left: 5px;
+      font-size: 0.9em;
+    }
+    .search-results .new-price {
+      color: #e94c89;
+      font-weight: 600;
+    }
+  </style>
   <script>
-    $(function () {
-      $("#search-input").on("keyup", function () {
-        var searchQuery = $(this).val();
-        if (searchQuery.length > 2) {
-          $.ajax({
-            type: "GET",
-            url: "{{ route('home.search') }}",
-            data: { query: searchQuery },
-            dataType: 'json',
-            success: function (data) {
-              $("#box-content-search").html('');
-              var assetPath = "{{ asset('uploads/products/thumbnails') }}";
-              $.each(data, function (index, item) {
-                var url = "{{ route('shop.product.details', ['product_slug' => 'product_slug_pls']) }}";
-                var link = url.replace('product_slug_pls', item.slug);
-                $("#box-content-search").append(
-                  `<li>
-                    <ul>
-                      <li class="product-item gap14 mb-10">
-                        <div class="image no-bg">
-                          <img src="` + assetPath + `/${item.image}" alt="${item.image}">
+    $(function(){
+      let searchTimeout;
+      const $input = $('#search-input');
+      const $dropdown = $('#search-results-dropdown');
+      const $list = $dropdown.find('.search-list');
+      const $loading = $dropdown.find('.search-loading');
+      $input.on('input', function(){
+        clearTimeout(searchTimeout);
+        const val = $(this).val().trim();
+        if(val.length > 2) {
+          $dropdown.addClass('active');
+          $list.empty();
+          $loading.show();
+          searchTimeout = setTimeout(function(){
+            $.ajax({
+              url: "{{ route('home.search') }}",
+              data: {search: val},
+              dataType: 'json',
+              success: function(data) {
+                $list.empty();
+                if(data.length === 0) {
+                  $list.append('<li class="px-3 py-2 text-muted">Can not find any product</li>');
+                } else {
+                  data.forEach(function(item){
+                    var url = "{{ route('shop.product.details', ['product_slug' => 'product_slug_pls']) }}";
+                    var link = url.replace('product_slug_pls', item.slug);
+                    $list.append(`
+                      <li class="product-item">
+                        <div class="image">
+                          <img src="{{ asset('uploads/products/thumbnails') }}/${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='{{ asset('uploads/products/thumbnails/no-image.jpg') }}';">
                         </div>
-                        <div class="flex items-center justify-between gap20 flex-grow">
-                          <div class="name">
-                           <a href="${link}" class="body-text">${item.name}</a>
-                          </div>
+                        <div class="info">
+                          <div class="name"><a href="${link}">${item.name}</a></div>
+                         
                         </div>
                       </li>
-                      <li class="mb-10">
-                        <div class="divider"></div>
-                      </li>
-                    </ul>
-                  </li>`
-                );
-              });
-            }
-          });
+                    `);
+                  });
+                }
+              },
+              error: function(){
+                $list.html('<li class="px-3 py-2 text-danger">Có lỗi xảy ra khi tìm kiếm</li>');
+              },
+              complete: function(){
+                $loading.hide();
+              }
+            });
+          }, 300);
         } else {
-          $("#box-content-search").html('');
+          $dropdown.removeClass('active');
+          $list.empty();
+          $loading.hide();
+        }
+      });
+
+      $(document).on('click', function(e){
+        if(!$(e.target).closest('.search-section').length) {
+          $dropdown.removeClass('active');
         }
       });
     });

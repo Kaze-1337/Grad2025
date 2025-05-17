@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    
+
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="surfside media" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.min.css')}}">
@@ -33,27 +34,87 @@
             min-height: 80px;
             border-bottom: 1px solid #eee;
         }
+
         .box-logo a {
             display: block;
             width: 150px;
             background: #fff;
         }
-        .box-logo img, 
+
+        .box-logo img,
         #logo_header_mobile {
             width: 100%;
             height: auto;
             object-fit: contain;
             display: block;
         }
+
         .header-left a {
             display: block;
             width: 120px;
         }
+
+        .box-content-search {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 5px;
+        }
+        
+        .box-content-search ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .box-content-search .product-item {
+            padding: 10px;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .box-content-search .product-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .box-content-search .product-item .name {
+            flex-grow: 1;
+        }
+        
+        .box-content-search .product-item .name a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .box-content-search .product-item .name a:hover {
+            color: #007bff;
+        }
+        
+        .box-content-search .divider {
+            height: 1px;
+            background-color: #e9ecef;
+            margin: 0;
+        }
+
+        .form-search {
+            position: relative;
+        }
     </style>
-   
-      @stack("styles")
-    
+
+    @stack("styles")
+
 </head>
+
 <body class="body">
     <div id="wrapper">
         <div id="page" class="">
@@ -68,8 +129,7 @@
                 <div class="section-menu-left">
                     <div class="box-logo">
                         <a href="{{ route('admin.index') }}" id="site-logo-inner">
-                            <img id="logo_header" alt="Logo" 
-                                src="{{ asset('/assets/images/logo/logo.png') }}">
+                            <img id="logo_header" alt="Logo" src="{{ asset('/assets/images/logo/logo.png') }}">
                         </a>
                         <div class="button-show-hide">
                             <i class="icon-menu-left"></i>
@@ -100,14 +160,14 @@
                                                 <div class="text">Add Product</div>
                                             </a>
                                         </li>
-                                    
+
                                         <li class="sub-menu-item">
                                             <a href="{{ route('admin.products') }}" class="">
                                                 <div class="text">Products</div>
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
-                                            <a href="{{ route('admin.product-imports') }}" class="">   
+                                            <a href="{{ route('admin.product-imports') }}" class="">
                                                 <div class="text">Import Product Condition</div>
                                             </a>
                                         </li>
@@ -206,14 +266,22 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <form method="POST" action="{{route('logout')}}" id="logout-form">
-                                    @csrf
-                                    <a href="{{route('logout')}}" class="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <div class="icon"><i class="icon-settings"></i></div>
-                                    <div class="text">Logout</div> 
+                                    <a href="{{ route('admin.sales.statistics') }}" class="">
+                                        <div class="icon"><i class="icon-bar-chart"></i></div>
+                                        <div class="text">Sales Statistics</div>
                                     </a>
+                                </li>
+
+                                <li class="menu-item">
+                                    <form method="POST" action="{{route('logout')}}" id="logout-form">
+                                        @csrf
+                                        <a href="{{route('logout')}}" class=""
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <div class="icon"><i class="icon-settings"></i></div>
+                                            <div class="text">Logout</div>
+                                        </a>
                                     </form>
-                                    </li>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -224,7 +292,7 @@
                         <div class="wrap">
                             <div class="header-left">
                                 <a href="{{ route('admin.index') }}">
-                                    <img id="logo_header_mobile" alt="Logo" 
+                                    <img id="logo_header_mobile" alt="Logo"
                                         src="{{ asset('/assets/images/logo/logo.png') }}">
                                 </a>
                                 <div class="button-show-hide">
@@ -234,7 +302,9 @@
 
                                 <form class="form-search flex-grow">
                                     <fieldset class="name">
-                                        <input type="text" placeholder="Search here..." class="show-search" name="name" id="search-input" tabindex="2" value="" aria-required="true" required="" autocomplete="off">
+                                        <input type="text" placeholder="Search here..." class="show-search" name="name"
+                                            id="search-input" tabindex="2" value="" aria-required="true" required=""
+                                            autocomplete="off">
                                     </fieldset>
                                     <div class="button-submit">
                                         <button class="" type="submit"><i class="icon-search"></i></button>
@@ -248,134 +318,20 @@
                             </div>
                             <div class="header-grid">
 
-                                <div class="popup-wrap message type-header">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="header-item">
-                                                <span class="text-tiny">1</span>
-                                                <i class="icon-bell"></i>
-                                            </span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end has-content"
-                                            aria-labelledby="dropdownMenuButton2">
-                                            <li>
-                                                <h6>Notifications</h6>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-1">
-                                                    <div class="image">
-                                                        <i class="icon-noti-1"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Discount available</div>
-                                                        <div class="text-tiny">Morbi sapien massa, ultricies at rhoncus
-                                                            at, ullamcorper nec diam</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-2">
-                                                    <div class="image">
-                                                        <i class="icon-noti-2"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Account has been verified</div>
-                                                        <div class="text-tiny">Mauris libero ex, iaculis vitae rhoncus
-                                                            et</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-3">
-                                                    <div class="image">
-                                                        <i class="icon-noti-3"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Order shipped successfully</div>
-                                                        <div class="text-tiny">Integer aliquam eros nec sollicitudin
-                                                            sollicitudin</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-4">
-                                                    <div class="image">
-                                                        <i class="icon-noti-4"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Order pending: <span>ID 305830</span>
-                                                        </div>
-                                                        <div class="text-tiny">Ultricies at rhoncus at ullamcorper</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li><a href="#" class="tf-button w-full">View all</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+
 
 
 
 
                                 <div class="popup-wrap user type-header">
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="header-user wg-user">
-                                                <span class="image">
-                                                    <img src="images/avatar/user-1.png" alt="">
-                                                </span>
-                                                <span class="flex flex-column">
-                                                    <span class="body-title mb-2">DuongPhong</span>
-                                                    <span class="text-tiny">Admin</span>
-                                                </span>
+                                        <span class="header-user wg-user">
+                                            <span class="flex flex-column">
+                                                <span class="body-title mb-2">DuongPhong</span>
+                                                <span class="text-tiny">Admin</span>
                                             </span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end has-content"
-                                            aria-labelledby="dropdownMenuButton3">
-                                            <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-user"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Account</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-mail"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Inbox</div>
-                                                    <div class="number">27</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-file-text"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Taskboard</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-headphones"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Support</div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="login.html" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-log-out"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Log out</div>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        </span>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -385,10 +341,10 @@
                     <div class="main-content">
                         @yield('content')
 
-                        
 
 
-                       
+
+
                     </div>
 
                 </div>
@@ -398,57 +354,58 @@
 
     <script src="{{ asset('js/jquery.min.js')}}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-select.min.js')}}"></script>   
-    <script src="{{ asset('js/sweetalert.min.js')}}"></script>    
+    <script src="{{ asset('js/bootstrap-select.min.js')}}"></script>
+    <script src="{{ asset('js/sweetalert.min.js')}}"></script>
     <script src="{{ asset('js/apexcharts/apexcharts.js')}}"></script>
     <script src="{{ asset('js/main.js')}}"></script>
 
     <script>
         $(function () {
-          $("#search-input").on("keyup", function () {
-            var searchQuery = $(this).val();
-            if (searchQuery.length > 2) {
-              $.ajax({
-                type: "GET",
-                url: "{{ route('admin.search') }}",
-                data: { query: searchQuery },
-                dataType: 'json',
-                success: function (data) {
-                  $("#box-content-search").html('');
-                  var assetPath = "{{ asset('uploads/products') }}";
-                  $.each(data, function (index, item) {
-                    var url = "{{ route('admin.product.edit', ['id' => 'product_id']) }}";
-                    var link = url.replace('product_id', item.id);
-                    $("#box-content-search").append(
-                      `<li>
-                        <ul>
-                          <li class="product-item gap14 mb-10">
-                            <div class="image no-bg">
-                              <img src="` + assetPath + `/${item.image}" alt="${item.image}">
-                            </div>
-                            <div class="flex items-center justify-between gap20 flex-grow">
-                              <div class="name">
-                               <a href="${link}" class="body-text">${item.name}</a>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="mb-10">
-                            <div class="divider"></div>
-                          </li>
-                        </ul>
-                      </li>`
-                    );
-                  });
+            $("#search-input").on("keyup", function () {
+                var searchQuery = $(this).val();
+                if (searchQuery.length > 2) {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('admin.search') }}",
+                        data: { query: searchQuery },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#box-content-search").html('');
+                                        var assetPath = "{{ asset('uploads/products/thumbnails') }}";
+                            $.each(data, function (index, item) {
+                                var url = "{{ route('admin.product.edit', ['id' => 'product_id']) }}";
+                                var link = url.replace('product_id', item.id);
+                                var imageUrl = assetPath + '/' + item.image;
+                                $("#box-content-search").append(
+                                    '<li>' +
+                                    '<ul>' +
+                                    '<li class="product-item gap14 mb-10 d-flex align-items-center">' +
+                                    '<div class="image no-bg" style="width: 50px; height: 50px; flex-shrink: 0; border-radius: 4px; overflow: hidden; background-color: #f8f9fa;">' +
+                                    '<img src="' + imageUrl + '" alt="' + item.name + '" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src=\'' + assetPath + '/no-image.jpg\';">' +
+                                    '</div>' +
+                                    '<div class="flex items-center justify-between gap20 flex-grow">' +
+                                    '<div class="name">' +
+                                    '<a href="' + link + '" class="body-text">' + item.name + '</a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</li>' +
+                                    '<li class="mb-10">' +
+                                    '<div class="divider"></div>' +
+                                    '</li>' +
+                                    '</ul>' +
+                                    '</li>'
+                                );
+                            });
+                        }
+                    });
+                } else {
+                    $("#box-content-search").html('');
                 }
-              });
-            } else {
-              $("#box-content-search").html('');
-            }
-          });
+            });
         });
-      </script>
+    </script>
     @stack("scripts")
 </body>
 
-  
+
 </html>

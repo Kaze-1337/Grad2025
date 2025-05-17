@@ -321,6 +321,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const addToCartForm = document.querySelector('.add-to-cart-form');
     if (addToCartForm) {
         addToCartForm.addEventListener('submit', function(e) {
+            @if(!Auth::check())
+                e.preventDefault();
+                window.location.href = "{{ route('login') }}";
+                return;
+            @endif
             if (document.querySelectorAll('input[name="sizes[]"]:checked').length === 0) {
                 e.preventDefault();
                 alert('Please select at least one size');

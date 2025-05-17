@@ -47,11 +47,26 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->input('search');
         $results = Product::where('name', 'LIKE', "%{$query}%")
-            ->select('id', 'name', 'slug', 'image', 'regular_price', 'sale_price')
+            ->select('id', 'name', 'slug', 'image', 'regular_price', 'sale_price', 'category_id', 'brand_id')
+            ->with(['category:id,name', 'brand:id,name'])
             ->take(8)
-            ->get();
+            ->get()
+            ->map(function($product) {
+                $thumbPath = public_path('uploads/products/thumbnails/' . $product->image);
+                if (!$product->image || !file_exists($thumbPath)) {
+                    $product->image = 'no-image.jpg';
+                }
+                
+                $product->formatted_price = $product->sale_price ? $product->sale_price : $product->regular_price;
+                $product->price_display = $product->sale_price 
+                    ? "<span class='new-price'>$" . number_format($product->sale_price, 2) . "</span>
+                       <span class='old-price'>$" . number_format($product->regular_price, 2) . "</span>"
+                    : "<span class='price'>$" . number_format($product->regular_price, 2) . "</span>";
+                    
+                return $product;
+            });
 
         return response()->json($results);
     }

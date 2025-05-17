@@ -28,7 +28,6 @@ class AdminController extends Controller
     {
         $orders = Order::orderBy('created_at', 'desc')->get()->take(10);
 
-        // Lấy thông tin tổng hợp đơn hàng
         $dashboardDatas = DB::select("SELECT 
             SUM(total) AS TotalAmount,
             SUM(CASE WHEN status = 'ordered' THEN total ELSE 0 END) AS TotalOrderedAmount,
@@ -40,14 +39,13 @@ class AdminController extends Controller
             SUM(CASE WHEN status = 'canceled' THEN 1 ELSE 0 END) AS TotalCanceled
         FROM orders");
 
-        // Lấy thông tin tổng hợp nhập hàng
         $importStats = DB::select("SELECT 
             SUM(quantity * import_price) as TotalImportAmount,
             COUNT(*) as TotalImports,
             SUM(quantity) as TotalQuantity
         FROM product_imports");
 
-        // Lấy dữ liệu theo tháng cho năm hiện tại
+       
         $monthlyData = DB::select("SELECT 
             MONTH(created_at) as month,
             SUM(total) as TotalAmount,
@@ -59,7 +57,6 @@ class AdminController extends Controller
         GROUP BY MONTH(created_at)
         ORDER BY MONTH(created_at)");
 
-        // Lấy dữ liệu nhập hàng theo tháng
         $monthlyImports = DB::select("SELECT 
             MONTH(import_date) as month,
             SUM(quantity * import_price) as TotalImportAmount,
@@ -69,7 +66,6 @@ class AdminController extends Controller
         GROUP BY MONTH(import_date)
         ORDER BY MONTH(import_date)");
 
-        // Khởi tạo mảng dữ liệu cho 12 tháng với giá trị mặc định là 0
         $monthlyAmounts = array_fill(0, 12, 0);
         $monthlyOrderedAmounts = array_fill(0, 12, 0);
         $monthlyDeliveredAmounts = array_fill(0, 12, 0);
@@ -77,23 +73,20 @@ class AdminController extends Controller
         $monthlyImportAmounts = array_fill(0, 12, 0);
         $monthlyImportQuantities = array_fill(0, 12, 0);
 
-        // Điền dữ liệu vào mảng
         foreach ($monthlyData as $data) {
-            $index = $data->month - 1; // Chuyển từ 1-12 sang 0-11
+            $index = $data->month - 1; 
             $monthlyAmounts[$index] = (float)$data->TotalAmount;
             $monthlyOrderedAmounts[$index] = (float)$data->TotalOrderedAmount;
             $monthlyDeliveredAmounts[$index] = (float)$data->TotalDeliveredAmount;
             $monthlyCanceledAmounts[$index] = (float)$data->TotalCanceledAmount;
         }
 
-        // Điền dữ liệu nhập hàng
         foreach ($monthlyImports as $data) {
             $index = $data->month - 1;
             $monthlyImportAmounts[$index] = (float)$data->TotalImportAmount;
             $monthlyImportQuantities[$index] = (int)$data->TotalQuantity;
         }
 
-        // Chuyển đổi mảng thành chuỗi cho JavaScript
         $AmountM = implode(',', $monthlyAmounts);
         $OrderedAmountM = implode(',', $monthlyOrderedAmounts);
         $DeliveredAmountM = implode(',', $monthlyDeliveredAmounts);
@@ -101,7 +94,6 @@ class AdminController extends Controller
         $ImportAmountM = implode(',', $monthlyImportAmounts);
         $ImportQuantityM = implode(',', $monthlyImportQuantities);
 
-        // Tính tổng cho mỗi loại
         $TotalAmount = array_sum($monthlyAmounts);
         $TotalOrderedAmount = array_sum($monthlyOrderedAmounts);
         $TotalDeliveredAmount = array_sum($monthlyDeliveredAmounts);
@@ -128,6 +120,7 @@ class AdminController extends Controller
         ));
     }
 
+//For Brands
     public function brands()
     {
         $brands = Brand::orderBy('id', 'desc')->paginate(10);
@@ -214,7 +207,7 @@ class AdminController extends Controller
         $brand->delete();
         return redirect()->route('admin.brands')->with('status', 'Brand has been deleted successfully');
     }
-
+//For Categories
     public function categories()
     {
         $categories = Category::orderBy('id', 'desc')->paginate(10);
@@ -303,7 +296,7 @@ class AdminController extends Controller
         $category->delete();
         return redirect()->route('admin.categories')->with('status', 'Category has been deleted successfully');
     }
-
+//For Products
     public function products()
     {
         $products = Product::orderBy('created_at', 'desc')->paginate(10);
@@ -353,6 +346,7 @@ class AdminController extends Controller
             $image_name = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('uploads/products'), $image_name);
             $product->image = $image_name;
+            $this->GenerateProductThumbnail(public_path('uploads/products/') . $image_name, $image_name);
         }
 
         if ($request->hasFile('images')) {
@@ -420,19 +414,26 @@ class AdminController extends Controller
         $product->brand_id = $request->brand_id;
 
         if ($request->hasFile('image')) {
-            // Delete old image
+
             if ($product->image && file_exists(public_path('uploads/products/' . $product->image))) {
                 unlink(public_path('uploads/products/' . $product->image));
+            }
+
+            
+            if ($product->image && file_exists(public_path('uploads/products/thumbnails/' . $product->image))) {
+                unlink(public_path('uploads/products/thumbnails/' . $product->image));
             }
 
             $image = $request->file('image');
             $image_name = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('uploads/products'), $image_name);
             $product->image = $image_name;
+           
+            $this->GenerateProductThumbnail(public_path('uploads/products/') . $image_name, $image_name);
         }
 
         if ($request->hasFile('images')) {
-            // Delete old images
+        
             if ($product->images) {
                 $old_images = json_decode($product->images);
                 foreach ($old_images as $old_image) {
@@ -469,7 +470,6 @@ class AdminController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // Delete images
         if ($product->image && file_exists(public_path('uploads/products/' . $product->image))) {
             unlink(public_path('uploads/products/' . $product->image));
         }
@@ -487,6 +487,18 @@ class AdminController extends Controller
 
         return redirect()->route('admin.products')
             ->with('success', 'Product has been deleted successfully!');
+    }
+
+    
+    public function GenerateProductThumbnail($imagePath, $imageName)
+    {
+        $destinationPath = public_path('uploads/products/thumbnails');
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+        $img = Image::read($imagePath);
+        $img->cover(124, 124, 'top');
+        $img->save($destinationPath . '/' . $imageName);
     }
 
     public function coupons()
@@ -575,21 +587,20 @@ class AdminController extends Controller
             return back()->with('error', 'Order not found.');
         }
 
-        // Nếu đơn hàng đang được chuyển sang trạng thái canceled
         if ($request->order_status == 'canceled' && $order->status != 'canceled') {
-            // Lấy tất cả các items trong đơn hàng
+ 
             $orderItems = OrderItem::where('order_id', $order->id)->get();
 
             foreach ($orderItems as $item) {
                 if ($item->options) {
                     $options = json_decode($item->options, true);
                     if (isset($options['size'])) {
-                        // Lấy size_name từ options (bỏ "EU " ở đầu)
+                
                         $size_name = str_replace('EU ', '', $options['size']);
                         $size = Size::where('name', $size_name)->first();
 
                         if ($size) {
-                            // Cộng lại số lượng vào kho
+                          
                             \DB::table('product_sizes')
                                 ->where('product_id', $item->product_id)
                                 ->where('size_id', $size->id)
@@ -621,7 +632,6 @@ class AdminController extends Controller
 
         Cache::forget('transaction_' . $request->order_id);
 
-        // Tải lại dữ liệu từ database
         $order->refresh();
 
         return back()->with('status', 'Order status has been updated successfully');
@@ -737,11 +747,7 @@ class AdminController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $results = Product::where('name', 'LIKE', "%{$query}%")
-            ->select('id', 'name', 'slug', 'image', 'regular_price', 'sale_price')
-            ->take(8)
-            ->get();
-
+        $results = Product::where('name','LIKE',"%{$query}%")->get()->take(5);
         return response()->json($results);
     }
 
@@ -836,6 +842,8 @@ class AdminController extends Controller
         }
     }
 
+
+//For Users
     public function users()
     {
         $users = \App\Models\User::orderBy('id', 'asc')->paginate(10);
@@ -966,6 +974,130 @@ class AdminController extends Controller
     
         return view('admin.product-statistics', compact(
             'totalProducts', 'inStock', 'outOfStock', 'totalQuantity', 'soldQuantity', 'products'
+        ));
+    }
+
+    public function salesStatistics(Request $request)
+    {
+        $period = $request->period ?? 'month';
+
+        $startDate = now();
+        switch($period) {
+            case 'day':
+                $startDate = $startDate->startOfDay();
+                break;
+            case 'week':
+                $startDate = $startDate->startOfWeek();
+                break;
+            case 'month':
+                $startDate = $startDate->startOfMonth();
+                break;
+            case 'year':
+                $startDate = $startDate->startOfYear();
+                break;
+        }
+
+  
+        $sales = OrderItem::with(['product', 'order'])
+            ->whereHas('order', function($q) use ($startDate, $period) {
+                $q->where('status', 'delivered')
+                  ->whereNotNull('delivered_date');
+                
+                if($period == 'day') {
+                    $q->whereDate('delivered_date', now()->today());
+                } elseif($period == 'week') {
+                    $q->whereBetween('delivered_date', [
+                        now()->startOfWeek(), 
+                        now()->endOfWeek()
+                    ]);
+                } else {
+                    $q->where('delivered_date', '>=', $startDate);
+                }
+            })
+            ->select('product_id', 
+                    DB::raw('SUM(quantity) as total_quantity'), 
+                    DB::raw('SUM(quantity * price) as total_amount'))
+            ->groupBy('product_id')
+            ->get();
+
+        $expectedSales = OrderItem::with(['product', 'order'])
+            ->whereHas('order', function($q) use ($startDate, $period) {
+                $q->where('status', 'ordered');
+                
+                if($period == 'day') {
+                    $q->whereDate('created_at', now()->today());
+                } elseif($period == 'week') {
+                    $q->whereBetween('created_at', [
+                        now()->startOfWeek(), 
+                        now()->endOfWeek()
+                    ]);
+                } else {
+                    $q->where('created_at', '>=', $startDate);
+                }
+            })
+            ->select('product_id', 
+                    DB::raw('SUM(quantity) as total_quantity'), 
+                    DB::raw('SUM(quantity * price) as total_amount'))
+            ->groupBy('product_id')
+            ->get();
+
+        $bestSellers = OrderItem::with(['product', 'order'])
+            ->whereHas('order', function($q) {
+                $q->where('status', 'delivered');
+            })
+            ->select('product_id', 
+                    DB::raw('SUM(quantity) as total_quantity'), 
+                    DB::raw('SUM(quantity * price) as total_amount'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_quantity')
+            ->limit(10)
+            ->get();
+
+        $dailySales = Order::where('status', 'delivered')
+            ->whereNotNull('delivered_date')
+            ->where('delivered_date', '>=', now()->subDays(30))
+            ->select(
+                DB::raw('DATE(delivered_date) as date'),
+                DB::raw('COUNT(*) as total_orders'),
+                DB::raw('SUM(total) as total_amount')
+            )
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $dailyExpectedSales = Order::where('status', 'ordered')
+            ->where('created_at', '>=', now()->subDays(30))
+            ->select(
+                DB::raw('DATE(created_at) as date'),
+                DB::raw('COUNT(*) as total_orders'),
+                DB::raw('SUM(total) as total_amount')
+            )
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $monthlySales = Order::where('status', 'delivered')
+            ->whereNotNull('delivered_date')
+            ->where('delivered_date', '>=', now()->subMonths(12))
+            ->select(
+                DB::raw('YEAR(delivered_date) as year'),
+                DB::raw('MONTH(delivered_date) as month'),
+                DB::raw('COUNT(*) as total_orders'),
+                DB::raw('SUM(total) as total_amount')
+            )
+            ->groupBy('year', 'month')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+        return view('admin.sales-statistics', compact(
+            'period', 
+            'sales',
+            'expectedSales', 
+            'bestSellers', 
+            'dailySales',
+            'dailyExpectedSales', 
+            'monthlySales'
         ));
     }
 }
