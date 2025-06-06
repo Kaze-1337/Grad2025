@@ -111,31 +111,31 @@
       </div>
       <h5 class="fw-semibold mb-3">How to choose the right shoe size for you</h5>
       <div class="table-responsive">
-        <table class="table table-bordered align-middle text-center bg-white shadow-sm">
-          <thead class="table-dark">
-            <tr>
-              <th>ASIA</th>
-              <th>EU</th>
-              <th>US</th>
-              <th>UK</th>
-              <th>JP</th>
-              <th>KR</th>
-              <th>CN</th>
-              <th>Foot Length (CM)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>39</td><td>39</td><td>6</td><td>5</td><td>24.5</td><td>245</td><td>245</td><td>24.1</td></tr>
-            <tr><td>40</td><td>40</td><td>7</td><td>6</td><td>25</td><td>250</td><td>250</td><td>24.8</td></tr>
-            <tr><td>41</td><td>41</td><td>8</td><td>7</td><td>25.5</td><td>255</td><td>255</td><td>25.5</td></tr>
-            <tr><td>42</td><td>42</td><td>9</td><td>8</td><td>26</td><td>260</td><td>260</td><td>26.2</td></tr>
-            <tr><td>43</td><td>43</td><td>10</td><td>9</td><td>27</td><td>270</td><td>270</td><td>26.9</td></tr>
-            <tr><td>44</td><td>44</td><td>11</td><td>10</td><td>27.5</td><td>275</td><td>275</td><td>27.6</td></tr>
-            <tr><td>45</td><td>45</td><td>12</td><td>11</td><td>28</td><td>280</td><td>280</td><td>28.3</td></tr>
-            <tr><td>46</td><td>46</td><td>13</td><td>12</td><td>28.5</td><td>285</td><td>285</td><td>28.8</td></tr>
-          </tbody>
-        </table>
-      </div>
+  <table class="table align-middle text-center bg-white shadow-sm" style="border-collapse: separate; border-spacing: 0; border: 1px solid #000;">
+    <thead class="table-dark">
+      <tr>
+        <th style="border: 1px solid #000;">ASIA</th>
+        <th style="border: 1px solid #000;">EU</th>
+        <th style="border: 1px solid #000;">US</th>
+        <th style="border: 1px solid #000;">UK</th>
+        <th style="border: 1px solid #000;">JP</th>
+        <th style="border: 1px solid #000;">KR</th>
+        <th style="border: 1px solid #000;">CN</th>
+        <th style="border: 1px solid #000;">Foot Length (CM)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="border: 1px solid #000;">39</td><td style="border: 1px solid #000;">39</td><td style="border: 1px solid #000;">6</td><td style="border: 1px solid #000;">5</td><td style="border: 1px solid #000;">24.5</td><td style="border: 1px solid #000;">245</td><td style="border: 1px solid #000;">245</td><td style="border: 1px solid #000;">24.1</td></tr>
+      <tr><td style="border: 1px solid #000;">40</td><td style="border: 1px solid #000;">40</td><td style="border: 1px solid #000;">7</td><td style="border: 1px solid #000;">6</td><td style="border: 1px solid #000;">25</td><td style="border: 1px solid #000;">250</td><td style="border: 1px solid #000;">250</td><td style="border: 1px solid #000;">24.8</td></tr>
+      <tr><td style="border: 1px solid #000;">41</td><td style="border: 1px solid #000;">41</td><td style="border: 1px solid #000;">8</td><td style="border: 1px solid #000;">7</td><td style="border: 1px solid #000;">25.5</td><td style="border: 1px solid #000;">255</td><td style="border: 1px solid #000;">255</td><td style="border: 1px solid #000;">25.5</td></tr>
+      <tr><td style="border: 1px solid #000;">42</td><td style="border: 1px solid #000;">42</td><td style="border: 1px solid #000;">9</td><td style="border: 1px solid #000;">8</td><td style="border: 1px solid #000;">26</td><td style="border: 1px solid #000;">260</td><td style="border: 1px solid #000;">260</td><td style="border: 1px solid #000;">26.2</td></tr>
+      <tr><td style="border: 1px solid #000;">43</td><td style="border: 1px solid #000;">43</td><td style="border: 1px solid #000;">10</td><td style="border: 1px solid #000;">9</td><td style="border: 1px solid #000;">27</td><td style="border: 1px solid #000;">270</td><td style="border: 1px solid #000;">270</td><td style="border: 1px solid #000;">26.9</td></tr>
+      <tr><td style="border: 1px solid #000;">44</td><td style="border: 1px solid #000;">44</td><td style="border: 1px solid #000;">11</td><td style="border: 1px solid #000;">10</td><td style="border: 1px solid #000;">27.5</td><td style="border: 1px solid #000;">275</td><td style="border: 1px solid #000;">275</td><td style="border: 1px solid #000;">27.6</td></tr>
+      <tr><td style="border: 1px solid #000;">45</td><td style="border: 1px solid #000;">45</td><td style="border: 1px solid #000;">12</td><td style="border: 1px solid #000;">11</td><td style="border: 1px solid #000;">28</td><td style="border: 1px solid #000;">280</td><td style="border: 1px solid #000;">280</td><td style="border: 1px solid #000;">28.3</td></tr>
+      <tr><td style="border: 1px solid #000;">46</td><td style="border: 1px solid #000;">46</td><td style="border: 1px solid #000;">13</td><td style="border: 1px solid #000;">12</td><td style="border: 1px solid #000;">28.5</td><td style="border: 1px solid #000;">285</td><td style="border: 1px solid #000;">285</td><td style="border: 1px solid #000;">28.8</td></tr>
+    </tbody>
+  </table>
+</div>
     </div>
   </div>
 </div>

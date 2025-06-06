@@ -123,7 +123,7 @@
             <div id="accordion-filter-price" class="accordion-collapse collapse show border-0"
               aria-labelledby="accordion-heading-price" data-bs-parent="#price-filters">
               <input class="price-range-slider" type="text" name="price_range" value="" data-slider-min="1"
-                data-slider-max="500" data-slider-step="5" data-slider-value="[{{ $min_price }},{{ $max_price }}]" data-currency="$" />
+                data-slider-max="1500" data-slider-step="5" data-slider-value="[{{ $min_price }},{{ $max_price }}]" data-currency="$" />
               <div class="price-range__info d-flex align-items-center mt-2">
                 <div class="me-auto">
                   <span class="text-secondary">Min Price: </span>
@@ -131,7 +131,7 @@
                 </div>
                 <div>
                   <span class="text-secondary">Max Price: </span>
-                  <span class="price-range__max">$500</span>
+                  <span class="price-range__max">$1500</span>
                 </div>
               </div>
             </div>
@@ -169,7 +169,7 @@
                 </div>
                 <div class="slide-split_media position-relative">
                   <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                    <img loading="lazy" src="uploads/shop/jordan.jpeg" 
+                    <img loading="lazy" src="uploads/jordan.jpg" 
                          class="slideshow-bg__img" 
                          style="width: 100%; height: 100%; object-fit: contain; max-height: 450px;"
                          alt="Jordan 1" />
@@ -186,12 +186,12 @@
                     <h2
                       class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
                       Luxury <br /><strong>Slides </strong></h2>
-                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5"> Discover the perfect pair that matches your style and comfort needs</p>
+                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5"> Experience ultimate comfort and refined style with our premium slides, designed for effortless elegance and everyday luxury.</p>
                   </div>
                 </div>
                 <div class="slide-split_media position-relative">
                   <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                    <img loading="lazy" src="uploads/shop/slide.jpg" 
+                    <img loading="lazy" src="uploads/Slide.jpg" 
                          class="slideshow-bg__img" 
                          style="width: 100%; height: 100%; object-fit: contain; max-height: 450px;"
                          alt="Slides" />
@@ -208,12 +208,12 @@
                     <h2
                       class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
                       Luxury <br /><strong>Boots </strong></h2>
-                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5"> Discover the perfect pair that matches your style and comfort needs</p>
+                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5"> Step into sophistication with our premium boots, crafted for durability, comfort, and timeless style.</p>
                   </div>
                 </div>
                 <div class="slide-split_media position-relative">
                   <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                    <img loading="lazy" src="uploads/shop/boots.jpg" 
+                    <img loading="lazy" src="uploads/Boots.jpg" 
                          class="slideshow-bg__img" 
                          style="width: 100%; height: 100%; object-fit: contain; max-height: 450px;"
                          alt="Boots" />
@@ -259,7 +259,7 @@
             <div class="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
 
             <div class="col-size align-items-center order-1 d-none d-lg-flex">
-              <span class="text-uppercase fw-medium me-2">View</span>
+              <span class="text-uppercase fw-medium me-2 ">View</span>
               <button class="btn-link fw-medium me-2 js-cols-size" data-target="products-grid" data-cols="2">2</button>
               <button class="btn-link fw-medium me-2 js-cols-size" data-target="products-grid" data-cols="3">3</button>
               <button class="btn-link fw-medium js-cols-size" data-target="products-grid" data-cols="4">4</button>
