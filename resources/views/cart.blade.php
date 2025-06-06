@@ -50,8 +50,8 @@
                 @foreach($items as $item)
               <tr>
                 <td>
-                  <div class="shopping-cart__product-item">
-                    <img loading="lazy" src="{{ asset('uploads/products/thumbnails') }}/{{ $item->model->image }}" width="120" height="120" alt="{{ $item->name }}" />
+                  <div class="shopping-cart__product-item" style="display: flex; align-items: center; justify-content: center; width: 120px; height: 120px; background: #f5f5f5; border-radius: 8px; overflow: hidden;">
+                    <img loading="lazy" src="{{ asset('uploads/products/thumbnails') }}/{{ $item->model->image }}" alt="{{ $item->name }}" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;" />
                   </div>
                 </td>
                 <td>
@@ -154,10 +154,7 @@
                           <th>Subtotal after discount</th>
                           <td>${{ Session::get('discounts')['subtotal'] }}</td>
                       </tr>
-                      <tr>
-                          <th>Shipping</th>
-                          <td>Free</td>
-                      </tr>
+                      
                       <tr>
                           <th>VAT</th>
                           <td>${{ Session::get('discounts')['tax'] }}</td>

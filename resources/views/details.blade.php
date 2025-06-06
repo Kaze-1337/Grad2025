@@ -97,6 +97,48 @@
           </div>
         </div>
       </div>
+      <div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h4 class="mb-3 fw-bold">Shoe Size Chart & Measurement Guide</h4>
+      <div class="mb-4">
+        <p class="mb-2">The StockX shoe size chart is converted based on European sizing and applies to all collections.</p>
+        <strong>How to measure your shoe size</strong>
+        <ul class="mb-2">
+          <li>Choose a flat surface and place your heel against a wall.</li>
+          <li>Measure the distance from point A (heel) to point B (the longest toe). The distance between A and B is your foot length.</li>
+        </ul>
+      </div>
+      <h5 class="fw-semibold mb-3">How to choose the right shoe size for you</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle text-center bg-white shadow-sm">
+          <thead class="table-dark">
+            <tr>
+              <th>ASIA</th>
+              <th>EU</th>
+              <th>US</th>
+              <th>UK</th>
+              <th>JP</th>
+              <th>KR</th>
+              <th>CN</th>
+              <th>Foot Length (CM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>39</td><td>39</td><td>6</td><td>5</td><td>24.5</td><td>245</td><td>245</td><td>24.1</td></tr>
+            <tr><td>40</td><td>40</td><td>7</td><td>6</td><td>25</td><td>250</td><td>250</td><td>24.8</td></tr>
+            <tr><td>41</td><td>41</td><td>8</td><td>7</td><td>25.5</td><td>255</td><td>255</td><td>25.5</td></tr>
+            <tr><td>42</td><td>42</td><td>9</td><td>8</td><td>26</td><td>260</td><td>260</td><td>26.2</td></tr>
+            <tr><td>43</td><td>43</td><td>10</td><td>9</td><td>27</td><td>270</td><td>270</td><td>26.9</td></tr>
+            <tr><td>44</td><td>44</td><td>11</td><td>10</td><td>27.5</td><td>275</td><td>275</td><td>27.6</td></tr>
+            <tr><td>45</td><td>45</td><td>12</td><td>11</td><td>28</td><td>280</td><td>280</td><td>28.3</td></tr>
+            <tr><td>46</td><td>46</td><td>13</td><td>12</td><td>28.5</td><td>285</td><td>285</td><td>28.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 </main>
 
 <style>

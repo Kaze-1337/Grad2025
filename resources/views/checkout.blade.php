@@ -65,14 +65,14 @@
               <div class="col-md-4">
                   <div class="form-floating mt-3 mb-3">
                       <input type="text" class="form-control" name="state" required value="{{ old('state') }}">
-                      <label for="state">State *</label>
+                      <label for="state">Country *</label>
                       @error('state')<span class="text-danger">{{ $message }}</span> @enderror
                   </div>
               </div>
               <div class="col-md-4">
                   <div class="form-floating my-3">
                       <input type="text" class="form-control" name="city" required value="{{ old('city') }}">
-                      <label for="city">Town / City *</label>
+                      <label for="city">Province *</label>
                       @error('city')<span class="text-danger">{{ $message }}</span> @enderror
                   </div>
               </div>
@@ -86,14 +86,14 @@
               <div class="col-md-6">
                   <div class="form-floating my-3">
                       <input type="text" class="form-control" name="locality" required value="{{ old('locality') }}">
-                      <label for="locality">Road Name, Area, Colony *</label>
+                      <label for="locality">District *</label>
                       @error('locality')<span class="text-danger">{{ $message }}</span> @enderror
                   </div>
               </div>
               <div class="col-md-12">
                   <div class="form-floating my-3">
                       <input type="text" class="form-control" name="landmark" required value="{{ old('landmark') }}">
-                      <label for="landmark">Note *</label>
+                      <label for="landmark">Delivery note </label>
                       @error('landmark')<span class="text-danger">{{ $message }}</span> @enderror
                   </div>
               </div>
@@ -164,11 +164,7 @@
                       <td align="right">${{ Surfsidemedia\Shoppingcart\Facades\Cart::instance('cart')->subtotal() }}</td>
                     </tr>
                     <tr>
-                      <th>SHIPPING</th>
-                      <td align="right">Free shipping</td>
-                    </tr>
-                    <tr>
-                      <th>VAT</th>
+                      <th>VAT (10%)</th>
                       <td align="right">${{ Surfsidemedia\Shoppingcart\Facades\Cart::instance('cart')->tax() }}</td>
                     </tr>
                     <tr>

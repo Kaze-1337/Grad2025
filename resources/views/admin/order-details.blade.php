@@ -173,7 +173,6 @@
                                                     <img src="{{ asset('uploads/products/' . $item->product->image) }}" alt="" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">
                                                     <div>
                                                         <div>{{ $item->product->name }}</div>
-                                                        <div style="font-size: 12px; color: #888;">{{ $item->product->short_description }}</div>
                                                     </div>
                                                 </div>
                                             </td>

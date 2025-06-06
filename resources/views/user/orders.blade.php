@@ -58,19 +58,18 @@
                     <div class="wg-table table-all-user">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 80px">OrderNo</th>
-                                        <th>Name</th>
-                                        <th class="text-center">Phone</th>
-                                        <th class="text-center">Subtotal</th>
-                                        <th class="text-center">Tax</th>
-                                        <th class="text-center">Total</th>
-
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Order Date</th>
-                                        <th class="text-center">Items</th>
-                                        <th class="text-center">Delivered On</th>
+                                <thead style="border-bottom: 2px solid #000;">
+                                    <tr style="border-bottom: 2px solid #000;">
+                                        <th style="width: 80px; border-right: 1px solid #000;">OrderNo</th>
+                                        <th style="border-right: 1px solid #000;">Name</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Phone</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Subtotal</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Tax</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Total</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Status</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Order Date</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Items</th>
+                                        <th class="text-center" style="border-right: 1px solid #000;">Delivered On</th>
                                         <th></th>
                                     </tr>
                                 </thead>

@@ -262,6 +262,7 @@
     .logo__image {
       max-width: 220px;
     }
+
     .product-item {
       display: flex;
       align-items: center;
@@ -270,6 +271,7 @@
       transition: all 0.3s ease;
       padding-right: 5px;
     }
+
     .product-item .image {
       display: flex;
       align-items: center;
@@ -282,9 +284,11 @@
       border-radius: 10px;
       background: #EFF4F8;
     }
+
     #box-content-search li {
       list-style: none;
     }
+
     #box-content-search .product-item {
       margin-bottom: 10px;
     }
@@ -292,7 +296,7 @@
     .search-result {
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       max-height: 400px;
       overflow-y: auto;
       padding: 8px 0;
@@ -315,8 +319,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .product-item .image {
@@ -407,7 +416,7 @@
             <li class="navigation__item">
               <a href="{{ route('cart.index') }}" class="navigation__link">Cart</a>
             </li>
-            
+
             <li class="navigation__item">
               <a href="{{ route('home.contact') }}" class="navigation__link">Contact</a>
             </li>
@@ -494,7 +503,7 @@
             <li class="navigation__item">
               <a href="{{ route('cart.index') }}" class="navigation__link">Cart</a>
             </li>
-            
+
             <li class="navigation__item">
               <a href="{{ route('home.contact') }}" class="navigation__link">Contact</a>
             </li>
@@ -515,7 +524,8 @@
 
             <div class="search-popup js-hidden-content">
               <div class="search-section position-relative" style="max-width:400px;margin:auto;">
-                <input type="text" id="search-input" class="form-control" placeholder="Search for products..." autocomplete="off" />
+                <input type="text" id="search-input" class="form-control" placeholder="Search for products..."
+                  autocomplete="off" />
                 <div class="search-popup__results" id="search-results-dropdown">
                   <div class="search-loading" style="display:none"><span class="spinner"></span>Searching...</div>
                   <ul class="search-list"></ul>
@@ -534,17 +544,17 @@
         </a>
         </div>
       @else
-      <div class="header-tools__item hover-container">
-      <a href="{{ Auth::user()->utype === 'ADM' ? route('admin.index') : route('user.index')}}"
-        class="header-tools__item">
-        <span class="pr-6px">{{ Auth::user()->name }}</span>
-        <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <use href="#icon_user" />
-        </svg>
-      </a>
-      </div>
-    @endguest
+        <div class="header-tools__item hover-container">
+        <a href="{{ Auth::user()->utype === 'ADM' ? route('admin.index') : route('user.index')}}"
+          class="header-tools__item">
+          <span class="pr-6px">{{ Auth::user()->name }}</span>
+          <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <use href="#icon_user" />
+          </svg>
+        </a>
+        </div>
+      @endguest
 
 
           <a href="{{ route('wishlist.index') }}" class="header-tools__item header-tools__cart">
@@ -588,66 +598,16 @@
           </div>
           <p class="footer-address"> HaNoi, Vietnam</p>
           <p class="m-0"><strong class="fw-medium">contact@stockx.in</strong></p>
-          <p><strong class="fw-medium">+1 000-000-0000</strong></p>
+          <p><strong class="fw-medium">+84 000-000-0000</strong></p>
 
-          <ul class="social-links list-unstyled d-flex flex-wrap mb-0">
-            <li>
-              <a href="#" class="footer__social-link d-block">
-                <svg class="svg-icon svg-icon_facebook" width="9" height="15" viewBox="0 0 9 15"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <use href="#icon_facebook" />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="footer__social-link d-block">
-                <svg class="svg-icon svg-icon_twitter" width="14" height="13" viewBox="0 0 14 13"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <use href="#icon_twitter" />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="footer__social-link d-block">
-                <svg class="svg-icon svg-icon_instagram" width="14" height="13" viewBox="0 0 14 13"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <use href="#icon_instagram" />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="footer__social-link d-block">
-                <svg class="svg-icon svg-icon_youtube" width="16" height="11" viewBox="0 0 16 11"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0117 1.8584C14.8477 1.20215 14.3281 0.682617 13.6992 0.518555C12.5234 0.19043 7.875 0.19043 7.875 0.19043C7.875 0.19043 3.19922 0.19043 2.02344 0.518555C1.39453 0.682617 0.875 1.20215 0.710938 1.8584C0.382812 3.00684 0.382812 5.46777 0.382812 5.46777C0.382812 5.46777 0.382812 7.90137 0.710938 9.07715C0.875 9.7334 1.39453 10.2256 2.02344 10.3896C3.19922 10.6904 7.875 10.6904 7.875 10.6904C7.875 10.6904 12.5234 10.6904 13.6992 10.3896C14.3281 10.2256 14.8477 9.7334 15.0117 9.07715C15.3398 7.90137 15.3398 5.46777 15.3398 5.46777C15.3398 5.46777 15.3398 3.00684 15.0117 1.8584ZM6.34375 7.68262V3.25293L10.2266 5.46777L6.34375 7.68262Z" />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="footer__social-link d-block">
-                <svg class="svg-icon svg-icon_pinterest" width="14" height="15" viewBox="0 0 14 15"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <use href="#icon_pinterest" />
-                </svg>
-              </a>
-            </li>
-          </ul>
+
         </div>
 
-       
+
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <div class="container d-md-flex align-items-center">
-        <span class="footer-copyright me-auto">©2024 StockX</span>
-        <div class="footer-settings d-md-flex align-items-center">
-          <a href="privacy-policy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms-conditions.html">Terms &amp;
-            Conditions</a>
-        </div>
-      </div>
-    </div>
+
   </footer>
 
 
@@ -703,6 +663,7 @@
       padding: 10px;
       text-align: center;
     }
+
     .search-loading .spinner {
       width: 20px;
       height: 20px;
@@ -713,96 +674,110 @@
       display: inline-block;
       margin-right: 10px;
     }
+
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
+
     .search-results .product-item {
       display: flex;
       align-items: center;
       padding: 10px;
       border-bottom: 1px solid #eee;
     }
+
     .search-results .product-item:hover {
       background-color: #f9f9f9;
     }
+
     .search-results .product-item .image {
       width: 50px;
       height: 50px;
       margin-right: 15px;
     }
+
     .search-results .product-item .image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .search-results .product-item .info {
       flex: 1;
     }
+
     .search-results .product-item .name {
       font-weight: 500;
       margin-bottom: 5px;
     }
+
     .search-results .price {
       color: #000;
       font-weight: 600;
     }
+
     .search-results .old-price {
       text-decoration: line-through;
       color: #999;
       margin-left: 5px;
       font-size: 0.9em;
     }
+
     .search-results .new-price {
       color: #e94c89;
       font-weight: 600;
     }
   </style>
   <script>
-    $(function(){
+    $(function () {
       let searchTimeout;
       const $input = $('#search-input');
       const $dropdown = $('#search-results-dropdown');
       const $list = $dropdown.find('.search-list');
       const $loading = $dropdown.find('.search-loading');
-      $input.on('input', function(){
+      $input.on('input', function () {
         clearTimeout(searchTimeout);
         const val = $(this).val().trim();
-        if(val.length > 2) {
+        if (val.length > 2) {
           $dropdown.addClass('active');
           $list.empty();
           $loading.show();
-          searchTimeout = setTimeout(function(){
+          searchTimeout = setTimeout(function () {
             $.ajax({
               url: "{{ route('home.search') }}",
-              data: {search: val},
+              data: { search: val },
               dataType: 'json',
-              success: function(data) {
+              success: function (data) {
                 $list.empty();
-                if(data.length === 0) {
+                if (data.length === 0) {
                   $list.append('<li class="px-3 py-2 text-muted">Can not find any product</li>');
                 } else {
-                  data.forEach(function(item){
+                  data.forEach(function (item) {
                     var url = "{{ route('shop.product.details', ['product_slug' => 'product_slug_pls']) }}";
                     var link = url.replace('product_slug_pls', item.slug);
                     $list.append(`
                       <li class="product-item">
-                        <div class="image">
-                          <img src="{{ asset('uploads/products/thumbnails') }}/${item.image}" alt="${item.name}" onerror="this.onerror=null;this.src='{{ asset('uploads/products/thumbnails/no-image.jpg') }}';">
-                        </div>
-                        <div class="info">
-                          <div class="name"><a href="${link}">${item.name}</a></div>
-                         
-                        </div>
-                      </li>
+      <div class="image" style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 4px; overflow: hidden; background: #f5f5f5;">
+        <img src="{{ asset('uploads/products/thumbnails') }}/${item.image}" alt="${item.name}" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;" onerror="this.onerror=null;this.src='{{ asset('uploads/products/thumbnails/no-image.jpg') }}';">
+      </div>
+      <div class="info">
+        <div class="name"><a href="${link}">${item.name}</a></div>
+      </div>
+    </li>
                     `);
                   });
                 }
               },
-              error: function(){
+              error: function () {
                 $list.html('<li class="px-3 py-2 text-danger">Có lỗi xảy ra khi tìm kiếm</li>');
               },
-              complete: function(){
+              complete: function () {
                 $loading.hide();
               }
             });
@@ -814,8 +789,8 @@
         }
       });
 
-      $(document).on('click', function(e){
-        if(!$(e.target).closest('.search-section').length) {
+      $(document).on('click', function (e) {
+        if (!$(e.target).closest('.search-section').length) {
           $dropdown.removeClass('active');
         }
       });
